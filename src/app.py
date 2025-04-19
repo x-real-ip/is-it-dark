@@ -23,7 +23,7 @@ def analyze_image_brightness(image):
 
     return {
         "brightness": round(brightness, 2),
-        "category": categorys
+        "category": category
     }
 
 
