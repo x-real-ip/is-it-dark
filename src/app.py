@@ -12,7 +12,7 @@ def analyze_image_brightness(image):
     brightness = sum(i * histo for i, histo in enumerate(histogram)) / pixels
 
     # Categorize based on thresholds
-    if brightness < 85:
+    if brightness < 50:
         category = "dark"
     elif brightness < 170:
         category = "medium"
