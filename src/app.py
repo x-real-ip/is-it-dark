@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from PIL import Image
+import colorsys
 import requests
 import io
 
@@ -22,22 +23,22 @@ def analyze_image_brightness(image):
 
     return {
         "brightness": round(brightness, 2),
-        "category": category
+        "category": categorys
     }
 
 
-def is_infrared_image(image, threshold=15):
-    image = image.convert("RGB")
+def is_infrared_image(image, threshold=10):
+    """
+    Detects if an image is likely infrared by measuring average saturation (HSV-based).
+    """
+    image = image.convert("RGB").resize((64, 64))  # Resize for performance
     pixels = list(image.getdata())
 
-    def rgb_to_saturation(r, g, b):
-        max_val = max(r, g, b)
-        min_val = min(r, g, b)
-        if max_val == 0:
-            return 0
-        return (max_val - min_val) / max_val * 100
+    saturations = []
+    for r, g, b in pixels:
+        h, s, v = colorsys.rgb_to_hsv(r / 255.0, g / 255.0, b / 255.0)
+        saturations.append(s * 100)  # Convert to 0–100 range
 
-    saturations = [rgb_to_saturation(r, g, b) for r, g, b in pixels]
     avg_saturation = sum(saturations) / len(saturations)
     return avg_saturation < threshold
 
