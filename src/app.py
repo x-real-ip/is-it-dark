@@ -5,12 +5,24 @@ import io
 
 app = Flask(__name__)
 
-def is_dark_image(image):
-    grayscale = image.convert("L")  # Grayscale
+def analyze_image_brightness(image):
+    grayscale = image.convert("L")
     histogram = grayscale.histogram()
     pixels = sum(histogram)
     brightness = sum(i * histo for i, histo in enumerate(histogram)) / pixels
-    return brightness < 150  # Adjust this threshold as needed
+
+    # Categorize based on thresholds
+    if brightness < 85:
+        category = "dark"
+    elif brightness < 170:
+        category = "medium"
+    else:
+        category = "bright"
+
+    return {
+        "brightness": round(brightness, 2),
+        "category": category
+    }
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
@@ -26,8 +38,8 @@ def analyze():
         return jsonify({"error": f"Failed to download image: {str(e)}"}), 500
 
     try:
-        result = is_dark_image(image)
-        return jsonify({"is_dark": result})
+        result = analyze_image_brightness(image)
+        return jsonify(result)
     except Exception as e:
         return jsonify({"error": f"Failed to analyze image: {str(e)}"}), 500
 

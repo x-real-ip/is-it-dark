@@ -1,14 +1,15 @@
 # 🌓 is-it-dark
-A simple API that analyzes an image from a URL and tells you if it's "dark" or "light". Useful for room light detection, camera snapshots, and IoT automation.
+A simple API that analyzes an image from a URL and determines how bright it is. Useful for room light detection, camera snapshots, smart home automation, and more.
 
 ---
 
 ## 🚀 Features
 
 - Accepts an image URL via POST request
-- Analyzes brightness using PIL (Pillow)
-- Returns `{ "is_dark": true/false }`
-- Lightweight Flask API, Dockerized
+- Analyzes brightness using the Python Pillow library
+- Returns average brightness value and a brightness **category** (`dark`, `medium`, `bright`)
+- Lightweight Flask API, Dockerized for deployment
+- Kubernetes-ready
 
 ---
 
