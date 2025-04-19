@@ -10,7 +10,7 @@ def is_dark_image(image):
     histogram = grayscale.histogram()
     pixels = sum(histogram)
     brightness = sum(i * histo for i, histo in enumerate(histogram)) / pixels
-    return brightness < 100  # Adjust this threshold as needed
+    return brightness < 150  # Adjust this threshold as needed
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
