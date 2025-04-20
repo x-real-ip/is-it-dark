@@ -155,14 +155,16 @@ The response will be in JSON format with two fields: is_dark and infrared:
 ```json
 {
   "brightness": 75.4,
-  "is_dark": true,
-  "infrared": false
+  "category": "medium",
+  "is_infrared": false
 }
 ```
 
-- is_dark: true if the image is considered "dark" based on the brightness
-  threshold.
-- infrared: true if the image is detected as infrared (based on the infrared
-  threshold).
+
+
 - brightness: The calculated brightness of the image (a float value,
   representing the overall brightness level of the image).
+- category: dark, medium or bright based on the brightness
+  threshold.
+- is_infrared: true if the image is detected as infrared (based on the infrared
+  threshold).
