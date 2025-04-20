@@ -98,10 +98,12 @@ editing code.
 
 ```yaml
 brightness_thresholds:
-  dark: 85
-  medium: 170
+    dark: 85
+    medium: 170
+    # Anything above 170 will be marked as "bright"
 
 infrared_threshold: 10
+# If the average saturation is below this threshold, the image will be considered infrared.
 ```
 
 ### Kubernetes
