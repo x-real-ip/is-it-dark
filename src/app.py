@@ -3,6 +3,11 @@ from PIL import Image
 import colorsys
 import requests
 import io
+import yaml
+
+with open("config.yaml") as f:
+    CONFIG = yaml.safe_load(f)
+
 
 app = Flask(__name__)
 
@@ -13,10 +18,12 @@ def analyze_image_brightness(image):
     pixels = sum(histogram)
     brightness = sum(i * histo for i, histo in enumerate(histogram)) / pixels
 
-    # Categorize based on thresholds
-    if brightness < 50:
+    dark_thresh = CONFIG["brightness_thresholds"]["dark"]
+    medium_thresh = CONFIG["brightness_thresholds"]["medium"]
+
+    if brightness < dark_thresh:
         category = "dark"
-    elif brightness < 170:
+    elif brightness < medium_thresh:
         category = "medium"
     else:
         category = "bright"
@@ -27,10 +34,11 @@ def analyze_image_brightness(image):
     }
 
 
-def is_infrared_image(image, threshold=10):
+def is_infrared_image(image):
     """
     Detects if an image is likely infrared by measuring average saturation (HSV-based).
     """
+    threshold = CONFIG["infrared_threshold"]
     image = image.convert("RGB").resize((64, 64))  # Resize for performance
     pixels = list(image.getdata())
 
