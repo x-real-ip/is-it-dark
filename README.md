@@ -1,15 +1,15 @@
 # 🌓 is-it-dark
 
 - [🌓 is-it-dark](#-is-it-dark)
-  - [🚀 Features](#-features)
-  - [📦 Requirements](#-requirements)
-  - [🛠 Setup](#-setup)
+  - [Features](#features)
+  - [Requirements](#requirements)
+  - [Setup](#setup)
     - [Local Python Setup](#local-python-setup)
     - [Podman or Docker](#podman-or-docker)
     - [Kubernetes](#kubernetes)
-  - [⚙️ Configuration via `config.yaml`](#️-configuration-via-configyaml)
+  - [Configuration via `config.yaml`](#configuration-via-configyaml)
     - [Example `config.yaml`:](#example-configyaml)
-  - [🖥️ API Usage](#️-api-usage)
+  - [API Usage](#api-usage)
     - [Image Analysis Request (POST)](#image-analysis-request-post)
       - [Example Request](#example-request)
       - [Example API Response](#example-api-response)
@@ -25,7 +25,7 @@ Ideal for smart home automation, camera monitoring, and ambient light detection.
 
 ---
 
-## 🚀 Features
+## Features
 
 - Accepts image URLs via POST requests.
 - Returns average brightness value and category.
@@ -35,14 +35,14 @@ Ideal for smart home automation, camera monitoring, and ambient light detection.
 
 ---
 
-## 📦 Requirements
+## Requirements
 
 - Python 3.11+
 - Docker (optional)
 
 ---
 
-## 🛠 Setup
+## Setup
 
 You can run the is-it-dark API in multiple ways:
 
@@ -94,7 +94,7 @@ docker-compose up -d
 This service is **Kubernetes-ready** a manifest yaml example can be found
 [here](https://github.com/x-real-ip/gitops/tree/main/manifests/is-it-dark)
 
-## ⚙️ Configuration via `config.yaml`
+## Configuration via `config.yaml`
 
 You can manage brightness thresholds and infrared detection settings without
 editing code.
@@ -115,7 +115,7 @@ infrared_threshold: 10
 # If the average saturation is below this threshold, the image will be considered infrared.
 ```
 
-## 🖥️ API Usage
+## API Usage
 
 Once the service is running, you can call the API to check if an image is dark
 or light, and to detect if it's infrared or color. In other words, it gives
@@ -133,8 +133,15 @@ curl -X POST "http://localhost:5000/analyze" \
      -F "image=@path/to/your/image.jpg"
 ```
 
+```bash
+curl -X POST http://localhost:5000/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com/black.jpg"}'
+```
+
 - Replace localhost:5000 with your server URL if running remotely.
-- The image=@path/to/your/image.jpg part sends the image for analysis.
+- The image=@path/to/your/image.jpg or url part sends the image for analysis.
+
 
 Example Request (Using Python's requests library):
 
