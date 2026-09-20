@@ -13,7 +13,7 @@ concurrency:
 jobs:
   build-and-push-image:
     name: Build and Push Image
-    uses: x-real-ip/github-actions/.github/workflows/build-and-push.yaml@v2
+    uses: x-real-ip/github-actions/.github/workflows/build-and-push.yaml@v3
     with:
       push: true
 
